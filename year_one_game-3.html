@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Year One Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7FB; --ink:#1A1D3A; --muted:#575C80; --line:#D5D8EA;
+  --cobalt:#2B47D6; --sun:#FFCF3A; --pink:#FF5C8D; --mint:#3CC6A0;
+  --surface:#FFFFFF; --on-cobalt:#FFFFFF;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12142A; --ink:#EEF0FF; --muted:#A6AACB; --line:#2E3256;
+    --cobalt:#6F86FF; --sun:#FFD95C; --pink:#FF7AA2; --mint:#5ED9B5;
+    --surface:#1B1E3A; --on-cobalt:#0E1024; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12142A; --ink:#EEF0FF; --muted:#A6AACB; --line:#2E3256;
+  --cobalt:#6F86FF; --sun:#FFD95C; --pink:#FF7AA2; --mint:#5ED9B5;
+  --surface:#1B1E3A; --on-cobalt:#0E1024; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1.0625rem;line-height:1.55}
+h1,h2,h3{font-family:"Bricolage Grotesque","Arial Rounded MT Bold",system-ui,sans-serif;line-height:1.05;margin:0}
+.wrap{max-width:44rem;margin:0 auto;padding:1.25rem 1.25rem 4rem}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.brand{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.01em}
+.brand span{display:inline-block;background:var(--sun);color:#1A1D3A;padding:.05em .35em;border-radius:.3em;transform:rotate(-3deg);margin-right:.2em}
+.track{display:flex;gap:.3rem;flex:1;max-width:16rem}
+.track i{flex:1;height:.45rem;border-radius:1rem;background:var(--line);transition:background .3s}
+.track i.done{background:var(--cobalt)}
+.track i.now{background:var(--pink)}
+.round-meta{color:var(--muted);font-size:.95rem;margin:0 0 .4rem}
+h2{font-size:clamp(2rem,6vw,2.9rem);font-weight:800;letter-spacing:-.025em;margin-bottom:.6rem}
+.lead{color:var(--muted);margin:0 0 1.6rem;max-width:36rem}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--cobalt);color:var(--on-cobalt);border:0;border-radius:999px;padding:.85rem 1.6rem;font-weight:700;font-size:1.05rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2rem;align-items:center}
+.hint{color:var(--muted);font-size:.9rem}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:.9rem;padding:.8rem 1rem}
+textarea{min-height:5.5rem;resize:vertical}
+input[type=text]:focus,textarea:focus{border-color:var(--cobalt);outline:none}
+label.q{display:block;font-weight:700;margin:1.3rem 0 .45rem}
+label.q small{display:block;font-weight:400;color:var(--muted)}
+
+/* intro */
+.intro{display:grid;gap:2rem;align-items:center}
+@media (min-width:640px){.intro{grid-template-columns:1.2fr 1fr}}
+.intro h1{font-size:clamp(2.8rem,9vw,4.6rem);font-weight:800;letter-spacing:-.04em}
+.mini-card{aspect-ratio:5/7;max-width:15rem;margin:0 auto;border-radius:1.2rem;padding:.6rem;background:conic-gradient(from 200deg,var(--cobalt),var(--pink),var(--sun),var(--mint),var(--cobalt));transform:rotate(4deg);box-shadow:0 18px 40px -18px rgba(43,71,214,.55)}
+.mini-card div{height:100%;border-radius:.8rem;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;padding:1rem}
+.mini-card b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.6rem;line-height:1}
+.mini-card .bar{height:.5rem;border-radius:1rem;background:var(--line);margin:.35rem 0;overflow:hidden}
+.mini-card .bar span{display:block;height:100%;background:var(--cobalt)}
+.rounds{list-style:none;padding:0;margin:1.5rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem}
+.rounds li{border:2px solid var(--line);border-radius:999px;padding:.2rem .75rem;font-size:.9rem}
+
+/* this or that */
+.tot{display:grid;gap:.7rem}
+.tot-row{display:grid;grid-template-columns:1fr auto 1fr;gap:.5rem;align-items:center}
+.tot-row .or{color:var(--muted);font-size:.85rem}
+.pick{background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:.9rem;padding:.75rem .6rem;font-weight:700;min-height:3.4rem;transition:transform .15s,background .15s}
+.pick[aria-pressed="true"]{background:var(--sun);border-color:var(--sun);color:#1A1D3A;transform:scale(1.03)}
+
+/* weather */
+.weather{display:grid;grid-template-columns:repeat(auto-fill,minmax(6.5rem,1fr));gap:.6rem}
+.wx{background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:1rem;padding:.8rem .4rem;text-align:center;font-size:.92rem}
+.wx .e{display:block;font-size:2rem;line-height:1.2}
+.wx[aria-pressed="true"]{border-color:var(--cobalt);background:var(--cobalt);color:var(--on-cobalt)}
+
+/* slot */
+.slot{background:var(--ink);color:var(--paper);border-radius:1.2rem;padding:1.4rem 1.2rem;min-height:7rem;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(1.25rem,4vw,1.65rem);line-height:1.2;border:4px solid var(--sun)}
+.slot.spinning{color:var(--sun)}
+.pulls{display:flex;gap:.4rem;margin:1rem 0}
+.pulls i{width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid var(--pink)}
+.pulls i.used{background:var(--pink)}
+.answered{margin-top:1.2rem;display:grid;gap:.6rem}
+.answered div{border-left:4px solid var(--mint);padding:.2rem 0 .2rem .8rem}
+.answered b{display:block;font-size:.92rem;color:var(--muted);font-weight:400}
+
+/* sliders */
+.meter{margin:1.3rem 0}
+.meter-head{display:flex;justify-content:space-between;font-weight:700}
+.meter-head output{font-family:"Bricolage Grotesque",sans-serif;font-size:1.4rem;color:var(--cobalt)}
+.meter p{margin:.1rem 0 .4rem;color:var(--muted);font-size:.92rem}
+input[type=range]{width:100%;accent-color:var(--cobalt);height:2rem}
+.scale-ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}
+
+/* awards */
+.awards{display:flex;flex-wrap:wrap;gap:.5rem}
+.award{background:var(--surface);color:var(--ink);border:2px dashed var(--line);border-radius:999px;padding:.55rem 1rem;font-size:.95rem}
+.award[aria-pressed="true"]{border-style:solid;border-color:var(--pink);background:var(--pink);color:#fff}
+
+/* rbt */
+.rbt label.q{display:flex;gap:.6rem;align-items:baseline}
+.rbt label.q .e{font-size:1.4rem}
+
+/* final card */
+.card-stage{display:flex;justify-content:center;padding:1rem 0 .5rem}
+.ycard{width:100%;max-width:24rem;border-radius:1.6rem;padding:.75rem;background:conic-gradient(from 210deg,var(--cobalt),var(--pink),var(--sun),var(--mint),var(--cobalt));box-shadow:0 26px 50px -24px rgba(43,71,214,.6);animation:deal .9s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes deal{from{transform:translateY(40px) rotate(-8deg) scale(.9);opacity:0}to{transform:rotate(-1.5deg);opacity:1}}
+@media (prefers-reduced-motion:reduce){.ycard{animation:none;transform:rotate(-1.5deg)}.pick,.track i{transition:none}}
+.ycard-in{background:var(--surface);border-radius:1.1rem;padding:1.3rem 1.2rem 1.1rem}
+.ycard h3{font-size:2.1rem;font-weight:800;letter-spacing:-.03em}
+.ycard .sub{color:var(--muted);margin:.15rem 0 1rem;font-size:.95rem}
+.ycard .wxline{display:flex;gap:.6rem;align-items:center;background:var(--paper);border-radius:.8rem;padding:.55rem .8rem;margin-bottom:1rem;font-size:.95rem}
+.ycard .wxline .e{font-size:1.5rem}
+.stat{display:grid;grid-template-columns:7.2rem 1fr 1.6rem;gap:.5rem;align-items:center;font-size:.9rem;margin:.3rem 0}
+.stat .bar{height:.55rem;border-radius:1rem;background:var(--line);overflow:hidden}
+.stat .bar span{display:block;height:100%;background:var(--cobalt);border-radius:1rem}
+.stat b{text-align:right;font-family:"Bricolage Grotesque",sans-serif}
+.ycard .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:1rem 0 .3rem}
+.ycard .chips span{background:var(--sun);color:#1A1D3A;border-radius:999px;padding:.2rem .65rem;font-size:.85rem;font-weight:700}
+.ycard .chips span.style{background:transparent;color:var(--ink);border:2px solid var(--line);font-weight:400}
+.ycard blockquote{margin:1rem 0 0;padding:.8rem .9rem;background:var(--paper);border-radius:.8rem;font-size:.95rem}
+.ycard blockquote b{display:block;font-size:.85rem;color:var(--muted);font-weight:400;margin-bottom:.15rem}
+.ycard .rbt-row{display:grid;gap:.35rem;margin-top:1rem;font-size:.93rem}
+.privacy{font-size:.88rem;color:var(--muted);margin-top:1.4rem}
+.talk{margin-top:2rem;border-top:2px solid var(--line);padding-top:1.4rem}
+.talk h3{font-size:1.4rem;margin-bottom:.5rem}
+.talk ul{padding-left:1.2rem;margin:.4rem 0}
+.share{margin:2rem auto 0;max-width:30rem;border:2px solid var(--line);border-radius:1.2rem;padding:1.2rem 1.3rem;background:var(--surface)}
+.share h3{font-size:1.35rem;margin-bottom:.4rem}
+.share p{margin:.3rem 0;color:var(--muted);font-size:.95rem}
+.share .actions{margin-top:1rem}
+.check{display:flex;gap:.55rem;align-items:center;margin:.8rem 0 0;font-size:.95rem}
+.check input{width:1.15rem;height:1.15rem;accent-color:var(--cobalt)}
+.ok{color:var(--mint)!important;font-weight:700}
+.wall-summary{display:grid;gap:1rem;margin:1.5rem 0 2rem}
+@media (min-width:640px){.wall-summary{grid-template-columns:1fr 1fr}}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:1.2rem;padding:1.1rem 1.2rem}
+.panel h3{font-size:1.25rem;margin-bottom:.7rem}
+.panel.wide{grid-column:1/-1}
+.advice-list{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
+.advice-list li{border-left:4px solid var(--sun);padding:.15rem 0 .15rem .8rem}
+.advice-list small{display:block;color:var(--muted)}
+.wx-tally{display:flex;flex-wrap:wrap;gap:.5rem}
+.wx-tally span{background:var(--paper);border-radius:.8rem;padding:.35rem .7rem;font-size:.92rem}
+.wall-grid{display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));align-items:start}
+.ycard.flat{animation:none;transform:none;max-width:none}
+.ycard.flat h3{font-size:1.6rem}
+.remove{margin-top:.8rem;background:none;border:0;color:var(--muted);text-decoration:underline;font-size:.88rem;padding:0}
+.empty{text-align:center;padding:2.5rem 1rem;border:2px dashed var(--line);border-radius:1.2rem;color:var(--muted)}
+@media print{header.top,.actions,.talk,.privacy{display:none}.ycard{animation:none;transform:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span>Year</span>One Card</div>
+    <div class="track" id="track" aria-hidden="true"></div>
+  </header>
+  <main id="stage" aria-live="polite"></main>
+</div>
+
+<script>
+(function(){
+const ROUNDS = 7;
+const KEY = "year-one-card-v1";
+
+const TOT = [
+  ["Library", "Dorm room"],
+  ["Morning class", "Night class"],
+  ["Dining hall", "Cook my own"],
+  ["Big group", "Two close friends"],
+  ["Plan it all", "Wing it"],
+  ["Study early", "Night before"],
+  ["Join everything", "Pick one thing"],
+  ["Call home a lot", "Text home sometimes"]
+];
+
+const WEATHER = [
+  ["☀️","Sunny"],["⛅","Partly cloudy"],["🌧️","Rainy"],["⛈️","Stormy"],
+  ["🌪️","Whirlwind"],["🌫️","Foggy"],["🌈","Rainbow after rain"],["❄️","Frozen"]
+];
+
+const PROMPTS = [
+  "A moment you felt proud of yourself",
+  "The best thing you ate this year",
+  "Someone who made your year better",
+  "A class that surprised you",
+  "A fail you can laugh about now",
+  "Something new you tried for the first time",
+  "A spot on campus that feels like yours",
+  "A time you asked for help (and it worked)",
+  "The most random night of the year",
+  "Something you figured out on your own",
+  "A song that was your year’s soundtrack",
+  "A habit you picked up that you want to keep"
+];
+
+const METERS = [
+  ["friends","Friendships","Finding your people"],
+  ["school","Academics","Feeling on top of classes"],
+  ["indep","Independence","Running your own life"],
+  ["wellness","Sleep and health","Taking care of yourself"],
+  ["help","Knowing where to go","Finding resources when you need them"]
+];
+
+const AWARDS = [
+  "Most improved time management","Best comeback after a rough week","Dining hall connoisseur",
+  "Most likely to be at office hours","Professional napper","Group chat MVP",
+  "Bravest new-thing-trier","Master of the all-nighter","Most likely to know a shortcut across campus",
+  "Best roommate diplomacy","Quietly crushed it","Main character energy"
+];
+
+let state = load() || fresh();
+function fresh(){
+  return {stage:0,name:"",picks:{},wxStart:null,wxNow:null,word:"",
+    pulls:[],used:[],meters:{friends:5,school:5,indep:5,wellness:5,help:5},
+    awards:[],customAward:"",rose:"",thorn:"",bud:"",advice:""};
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function load(){try{const s=localStorage.getItem(KEY);return s?JSON.parse(s):null}catch(e){return null}}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+const stage = document.getElementById("stage");
+const track = document.getElementById("track");
+
+function drawTrack(){
+  let h="";
+  for(let i=1;i<=ROUNDS;i++){
+    const cls = state.stage>i||state.stage>ROUNDS ? "done" : state.stage===i ? "now" : "";
+    h+=`<i class="${cls}"></i>`;
+  }
+  track.innerHTML=h;
+}
+function go(n){state.stage=n;save();render();window.scrollTo({top:0,behavior:"smooth"})}
+function meta(n,mins){return `<p class="round-meta">Round ${n} of ${ROUNDS} · about ${mins} min</p>`}
+function nav(nextOk=true,label="Next round"){
+  return `<div class="actions">
+    <button class="btn" id="next" ${nextOk?"":"disabled"}>${label}</button>
+    <button class="btn ghost" id="back">Back</button>
+  </div>`;
+}
+function wireNav(){
+  const n=document.getElementById("next"), b=document.getElementById("back");
+  if(n) n.onclick=()=>go(state.stage+1);
+  if(b) b.onclick=()=>go(state.stage-1);
+}
+
+function render(){
+  drawTrack();
+  const fns=[intro,thisOrThat,weather,highlights,meters,awards,rbt,advice,card,wall];
+  fns[Math.min(state.stage,fns.length-1)]();
+}
+
+/* 0 — intro */
+function intro(){
+  stage.innerHTML=`
+  <section class="intro">
+    <div>
+      <h1>How did year one actually go?</h1>
+      <p class="lead" style="margin-top:1rem">Seven quick rounds, about 15–20 minutes. Tap, spin, rate and write a little. At the end you get your own Year One card to keep.</p>
+      <label class="q" for="name">What should your card say?<small>First name or a nickname</small></label>
+      <input type="text" id="name" maxlength="24" value="${esc(state.name)}" autocomplete="off">
+      <div class="actions"><button class="btn" id="start">${Object.keys(state.picks).length?"Keep going":"Start round 1"}</button>
+      ${Object.keys(state.picks).length?'<button class="btn ghost" id="reset">Start over</button>':""}
+      <button class="btn ghost" id="wallBtn">See the group wall</button></div>
+      <ul class="rounds" aria-label="The rounds">
+        <li>This or that</li><li>Year forecast</li><li>Highlight spinner</li><li>Growth meter</li><li>Award show</li><li>Rose, thorn, bud</li><li>Note to next year</li>
+      </ul>
+    </div>
+    <div class="mini-card" aria-hidden="true"><div>
+      <b>${esc(state.name)||"You"}</b>
+      <div><div class="bar"><span style="width:70%"></span></div><div class="bar"><span style="width:45%"></span></div><div class="bar"><span style="width:85%"></span></div></div>
+      <small style="color:var(--muted)">Year One · your card</small>
+    </div></div>
+  </section>`;
+  const nm=document.getElementById("name");
+  nm.oninput=()=>{state.name=nm.value;save();document.querySelector(".mini-card b").textContent=nm.value||"You"};
+  document.getElementById("start").onclick=()=>go(1);
+  document.getElementById("wallBtn").onclick=()=>window.open("https://padlet.com/anikateckchandani/year-one-s025r2pv0l6n642k5l86","_blank");
+  const r=document.getElementById("reset");
+  if(r) r.onclick=()=>{state=fresh();try{localStorage.removeItem(KEY)}catch(e){}render()};
+}
+
+/* 1 — this or that */
+function thisOrThat(){
+  const count=()=>Object.keys(state.picks).length;
+  stage.innerHTML=`${meta(1,2)}
+  <h2>This or that</h2>
+  <p class="lead">Go with your gut. Which one was more <em>you</em> this year?</p>
+  <div class="tot">${TOT.map((p,i)=>`
+    <div class="tot-row">
+      <button class="pick" data-i="${i}" data-v="0" aria-pressed="${state.picks[i]===0}">${p[0]}</button>
+      <span class="or">or</span>
+      <button class="pick" data-i="${i}" data-v="1" aria-pressed="${state.picks[i]===1}">${p[1]}</button>
+    </div>`).join("")}</div>
+  ${nav(count()===TOT.length)}
+  <p class="hint" id="left">${TOT.length-count()} left to pick</p>`;
+  stage.querySelectorAll(".pick").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i,v=+b.dataset.v;state.picks[i]=v;save();
+    stage.querySelectorAll(`.pick[data-i="${i}"]`).forEach(x=>x.setAttribute("aria-pressed",+x.dataset.v===v));
+    document.getElementById("next").disabled=count()!==TOT.length;
+    document.getElementById("left").textContent=count()===TOT.length?"All picked. Nice.":`${TOT.length-count()} left to pick`;
+  });
+  wireNav();
+}
+
+/* 2 — weather */
+function weather(){
+  const grid=(k)=>WEATHER.map((w,i)=>`<button class="wx" data-k="${k}" data-i="${i}" aria-pressed="${state[k]===i}"><span class="e">${w[0]}</span>${w[1]}</button>`).join("");
+  stage.innerHTML=`${meta(2,2)}
+  <h2>Your year’s forecast</h2>
+  <p class="lead">If your year were weather, what was it like?</p>
+  <label class="q">When you first got here</label>
+  <div class="weather">${grid("wxStart")}</div>
+  <label class="q">Right now</label>
+  <div class="weather">${grid("wxNow")}</div>
+  <label class="q" for="word">One word for the whole year</label>
+  <input type="text" id="word" maxlength="20" value="${esc(state.word)}" autocomplete="off">
+  ${nav()}`;
+  stage.querySelectorAll(".wx").forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k;state[k]=+b.dataset.i;save();
+    stage.querySelectorAll(`.wx[data-k="${k}"]`).forEach(x=>x.setAttribute("aria-pressed",x===b));
+  });
+  const w=document.getElementById("word");w.oninput=()=>{state.word=w.value;save()};
+  wireNav();
+}
+
+/* 3 — highlight spinner */
+function highlights(){
+  const MAX=3;
+  const pending=state.pulls.find(p=>!p.answer);
+  stage.innerHTML=`${meta(3,6)}
+  <h2>Highlight spinner</h2>
+  <p class="lead">Spin for a prompt and answer it in a sentence or two. Three spins total. Don’t like one? You get one free re-spin.</p>
+  <div class="slot" id="slot">${pending?esc(pending.prompt):state.pulls.length>=MAX?"Reel complete!":"Tap spin to get a prompt"}</div>
+  <div class="pulls" aria-label="Spins used">${Array.from({length:MAX},(_,i)=>`<i class="${i<state.pulls.length?"used":""}"></i>`).join("")}</div>
+  <div id="answer-area"></div>
+  <div class="answered" id="answered"></div>
+  ${nav(state.pulls.length>=MAX&&!pending)}`;
+  const slot=document.getElementById("slot"), area=document.getElementById("answer-area");
+
+  function drawAnswered(){
+    document.getElementById("answered").innerHTML=state.pulls.filter(p=>p.answer).map(p=>`<div><b>${esc(p.prompt)}</b>${esc(p.answer)}</div>`).join("");
+  }
+  function drawArea(){
+    const pend=state.pulls.find(p=>!p.answer);
+    if(pend){
+      area.innerHTML=`<label class="q" for="ans">Your answer</label><textarea id="ans" maxlength="280"></textarea>
+      <div class="actions" style="margin-top:.8rem"><button class="btn" id="saveAns">Save answer</button>
+      ${!state.respun?'<button class="btn ghost" id="respin">Re-spin this one</button>':""}</div>`;
+      const ta=document.getElementById("ans");ta.focus({preventScroll:true});
+      document.getElementById("saveAns").onclick=()=>{
+        if(!ta.value.trim()){ta.focus();return}
+        pend.answer=ta.value.trim();save();highlights();
+      };
+      const rs=document.getElementById("respin");
+      if(rs) rs.onclick=()=>{state.respun=true;state.pulls.pop();save();spin()};
+    } else if(state.pulls.length<MAX){
+      area.innerHTML=`<div class="actions" style="margin-top:0"><button class="btn" id="spinBtn">Spin</button></div>`;
+      document.getElementById("spinBtn").onclick=spin;
+    } else area.innerHTML="";
+  }
+  function spin(){
+    const pool=PROMPTS.filter(p=>!state.used.includes(p));
+    const pick=pool[Math.floor(Math.random()*pool.length)];
+    area.innerHTML="";
+    const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    slot.classList.add("spinning");
+    let n=0,total=reduce?1:14;
+    const tick=()=>{
+      slot.textContent=n<total-1?PROMPTS[Math.floor(Math.random()*PROMPTS.length)]:pick;
+      n++;
+      if(n<total) setTimeout(tick,40+n*12);
+      else{slot.classList.remove("spinning");state.used.push(pick);state.pulls.push({prompt:pick,answer:""});save();
+        stage.querySelectorAll(".pulls i").forEach((d,i)=>d.classList.toggle("used",i<state.pulls.length));drawArea();}
+    };
+    tick();
+  }
+  drawAnswered();drawArea();wireNav();
+}
+
+/* 4 — growth meter */
+function meters(){
+  stage.innerHTML=`${meta(4,3)}
+  <h2>Growth meter</h2>
+  <p class="lead">Compared to day one, how much have you grown in each area? No wrong answers. These become the stats on your card.</p>
+  ${METERS.map(m=>`<div class="meter">
+    <div class="meter-head"><label for="m-${m[0]}">${m[1]}</label><output id="o-${m[0]}">${state.meters[m[0]]}</output></div>
+    <p>${m[2]}</p>
+    <input type="range" id="m-${m[0]}" min="1" max="10" value="${state.meters[m[0]]}">
+    <div class="scale-ends"><span>Still figuring it out</span><span>Leveled way up</span></div>
+  </div>`).join("")}
+  ${nav()}`;
+  METERS.forEach(m=>{
+    const r=document.getElementById("m-"+m[0]);
+    r.oninput=()=>{state.meters[m[0]]=+r.value;document.getElementById("o-"+m[0]).textContent=r.value;save()};
+  });
+  wireNav();
+}
+
+/* 5 — awards */
+function awards(){
+  stage.innerHTML=`${meta(5,2)}
+  <h2>The award show</h2>
+  <p class="lead">You’re hosting, and you’re also the winner. Give yourself two awards, or write your own.</p>
+  <div class="awards">${AWARDS.map(a=>`<button class="award" aria-pressed="${state.awards.includes(a)}">${a}</button>`).join("")}</div>
+  <label class="q" for="custom">Or invent one<small>Like “Best at finding free food”</small></label>
+  <input type="text" id="custom" maxlength="48" value="${esc(state.customAward)}" autocomplete="off">
+  ${nav()}
+  <p class="hint" id="acount"></p>`;
+  const upd=()=>{
+    const n=state.awards.length+(state.customAward.trim()?1:0);
+    document.getElementById("acount").textContent=n>=2?"Two awards locked in.":`${2-n} more to pick`;
+    document.getElementById("next").disabled=n<1;
+  };
+  stage.querySelectorAll(".award").forEach(b=>b.onclick=()=>{
+    const a=b.textContent,on=state.awards.includes(a);
+    const limit=2-(state.customAward.trim()?1:0);
+    if(on) state.awards=state.awards.filter(x=>x!==a);
+    else{ if(state.awards.length>=limit) state.awards.shift(); state.awards.push(a); }
+    stage.querySelectorAll(".award").forEach(x=>x.setAttribute("aria-pressed",state.awards.includes(x.textContent)));
+    save();upd();
+  });
+  const c=document.getElementById("custom");
+  c.oninput=()=>{state.customAward=c.value;if(c.value.trim()&&state.awards.length>1){state.awards=state.awards.slice(-1);
+    stage.querySelectorAll(".award").forEach(x=>x.setAttribute("aria-pressed",state.awards.includes(x.textContent)))}save();upd()};
+  wireNav();upd();
+}
+
+/* 6 — rose thorn bud */
+function rbt(){
+  stage.innerHTML=`${meta(6,3)}
+  <h2>Rose, thorn, bud</h2>
+  <p class="lead">One line each is plenty.</p>
+  <div class="rbt">
+    <label class="q" for="rose"><span class="e">🌹</span><span>Rose<small>The best part of the year</small></span></label>
+    <textarea id="rose" maxlength="200">${esc(state.rose)}</textarea>
+    <label class="q" for="thorn"><span class="e">🌵</span><span>Thorn<small>Something that was hard, and how you got through it</small></span></label>
+    <textarea id="thorn" maxlength="200">${esc(state.thorn)}</textarea>
+    <label class="q" for="bud"><span class="e">🌱</span><span>Bud<small>Something you’re excited to grow next year</small></span></label>
+    <textarea id="bud" maxlength="200">${esc(state.bud)}</textarea>
+  </div>
+  ${nav()}`;
+  ["rose","thorn","bud"].forEach(k=>{const t=document.getElementById(k);t.oninput=()=>{state[k]=t.value;save()}});
+  wireNav();
+}
+
+/* 7 — advice */
+function advice(){
+  stage.innerHTML=`${meta(7,2)}
+  <h2>A note for next year</h2>
+  <p class="lead">A brand-new first-year just moved in down the hall. What’s the one thing you’d tell them?</p>
+  <textarea id="adv" maxlength="220">${esc(state.advice)}</textarea>
+  ${nav(true,"Reveal my card")}`;
+  const t=document.getElementById("adv");t.oninput=()=>{state.advice=t.value;save()};
+  wireNav();
+}
+
+/* shared-data helpers */
+let DB=null, USER=null, UID=null, IS_OWNER=false, groupCards=null, dbState="loading";
+const num=(v,lo,hi,d)=>{v=Math.round(Number(v));return Number.isFinite(v)&&v>=lo&&v<=hi?v:d};
+const str=(v,max)=>typeof v==="string"?v.slice(0,max):"";
+
+function cardData(){
+  const styles=Object.entries(state.picks).map(([i,v])=>TOT[i]&&TOT[i][v]).filter(Boolean);
+  return {
+    name:str(state.name,24), word:str(state.word,20),
+    wxStart:state.wxStart, wxNow:state.wxNow, meters:{...state.meters},
+    awards:[...state.awards,...(state.customAward.trim()?[state.customAward.trim()]:[])].slice(0,2),
+    styles:[styles[0],styles[1],styles[5]].filter(Boolean),
+    highlights:state.pulls.filter(p=>p.answer).map(p=>({prompt:p.prompt,answer:p.answer})),
+    rose:state.rose, thorn:state.thorn, bud:state.bud, advice:state.advice
+  };
+}
+function clean(d){
+  d=d||{};
+  const m={};METERS.forEach(x=>m[x[0]]=num(d.meters&&d.meters[x[0]],1,10,5));
+  return {
+    name:str(d.name,24), word:str(d.word,20),
+    wxStart:num(d.wxStart,0,WEATHER.length-1,null), wxNow:num(d.wxNow,0,WEATHER.length-1,null),
+    meters:m,
+    awards:Array.isArray(d.awards)?d.awards.slice(0,2).map(a=>str(a,48)):[],
+    styles:Array.isArray(d.styles)?d.styles.slice(0,3).map(a=>str(a,30)):[],
+    highlights:Array.isArray(d.highlights)?d.highlights.slice(0,3).map(h=>({prompt:str(h&&h.prompt,80),answer:str(h&&h.answer,280)})):[],
+    rose:str(d.rose,200), thorn:str(d.thorn,200), bud:str(d.bud,200), advice:str(d.advice,220)
+  };
+}
+function cardHTML(d,flat,allHighlights){
+  const s=d.wxStart==null?null:WEATHER[d.wxStart], n=d.wxNow==null?null:WEATHER[d.wxNow];
+  const avg=(Object.values(d.meters).reduce((a,b)=>a+b,0)/METERS.length).toFixed(1);
+  const hl=allHighlights?d.highlights:d.highlights.slice(0,1);
+  return `<article class="ycard${flat?" flat":""}"><div class="ycard-in">
+    <h3>${esc(d.name)||"Year One"}</h3>
+    <p class="sub">${d.word?`Year in a word: <strong>${esc(d.word)}</strong>`:"Year one, complete"} · growth ${avg}/10</p>
+    ${s||n?`<div class="wxline"><span class="e">${s?s[0]:"·"}</span><span>${s?s[1]:"?"}</span><span aria-hidden="true">to</span><span class="e">${n?n[0]:"·"}</span><span>${n?n[1]:"?"}</span></div>`:""}
+    ${METERS.map(m=>`<div class="stat"><span>${m[1]}</span><span class="bar"><span style="width:${d.meters[m[0]]*10}%"></span></span><b>${d.meters[m[0]]}</b></div>`).join("")}
+    <div class="chips">${d.awards.map(a=>`<span>🏆 ${esc(a)}</span>`).join("")}${d.styles.map(x=>`<span class="style">${esc(x)}</span>`).join("")}</div>
+    ${hl.map(h=>`<blockquote><b>${esc(h.prompt)}</b>${esc(h.answer)}</blockquote>`).join("")}
+    ${d.rose||d.thorn||d.bud?`<div class="rbt-row">
+      ${d.rose?`<div>🌹 ${esc(d.rose)}</div>`:""}
+      ${d.thorn?`<div>🌵 ${esc(d.thorn)}</div>`:""}
+      ${d.bud?`<div>🌱 ${esc(d.bud)}</div>`:""}</div>`:""}
+    ${d.advice?`<blockquote><b>Advice for next year’s first-years</b>${esc(d.advice)}</blockquote>`:""}
+  </div></article>`;
+}
+
+/* 8 — card */
+function card(){
+  stage.innerHTML=`
+  <h2 style="text-align:center">Your Year One card</h2>
+  <p class="lead" style="text-align:center;margin:0 auto 1rem">Screenshot it, print it, or share it with the group below.</p>
+  <div class="card-stage">${cardHTML(cardData(),false,false)}</div>
+  <div class="actions" style="justify-content:center">
+    <button class="btn" id="print">Print or save as PDF</button>
+    <button class="btn ghost" id="edit">Edit answers</button>
+    <button class="btn ghost" id="again">Start over</button>
+  </div>
+  <section class="share" id="share" aria-live="polite"></section>
+  <section class="talk">
+    <h3>Talk it through</h3>
+    <ul>
+      <li>Which stat on your card surprised you most?</li>
+      <li>What got you through your thorn? Could that help again next year?</li>
+      <li>What’s one small step toward your bud you could take this month?</li>
+    </ul>
+  </section>`;
+  document.getElementById("print").onclick=()=>window.print();
+  document.getElementById("edit").onclick=()=>go(1);
+  document.getElementById("again").onclick=()=>{state=fresh();try{localStorage.removeItem(KEY)}catch(e){}go(0)};
+  drawShare();
+}
+
+function drawShare(msg){
+  const el=document.getElementById("share"); if(!el) return;
+  el.innerHTML=`<h3>Share with the group</h3>
+    <p>1. Screenshot your card above.<br>2. Tap the button below and press the <b>+</b> button to post your screenshot. No account needed.</p>
+    <div class="actions"><a class="btn" href="https://padlet.com/anikateckchandani/year-one-s025r2pv0l6n642k5l86" target="_blank" rel="noopener">Post my card to the group wall</a></div>`;
+}
+function drawShareOld(msg){
+  const el=document.getElementById("share"); if(!el) return;
+  if(dbState==="off"){el.innerHTML=`<h3>Share with the group</h3><p>Group sharing isn’t set up on this page yet. Your card is still saved on this device, so you can screenshot it.</p>`;return}
+  if(dbState==="error"){el.innerHTML=`<h3>Share with the group</h3><p>The group wall couldn’t load. Reload the page to try again.</p>`;return}
+  if(groupCards===null){el.innerHTML=`<h3>Share with the group</h3><p>${dbState==="slow"?"The group wall is taking a while to load. Reload the page to try again.":"Loading the group wall…"}</p>`;return}
+  const mine=groupCards.find(c=>c.id===UID);
+  el.innerHTML=`<h3>Share with the group</h3>
+    ${mine?`<p class="ok">Your card is on the group wall.</p><p>Changed an answer? Update it. Changed your mind? Take it down anytime.</p>`
+      :`<p>Your answers are private until you share. Shared cards can be seen by everyone who has this link, including your mentor.</p>`}
+    <label class="check"><input type="checkbox" id="noThorn" ${state.hideThorn?"checked":""}> Keep my thorn private</label>
+    <div class="actions">
+      <button class="btn" id="shareBtn">${mine?"Update my shared card":"Share my card"}</button>
+      ${mine?'<button class="btn ghost" id="unshare">Remove my card</button>':""}
+      <button class="btn ghost" id="toWall">See the group wall</button>
+    </div>${msg?`<p>${esc(msg)}</p>`:""}`;
+  const nt=document.getElementById("noThorn");nt.onchange=()=>{state.hideThorn=nt.checked;save()};
+  document.getElementById("toWall").onclick=()=>go(9);
+  const sb=document.getElementById("shareBtn");
+  sb.onclick=async()=>{
+    sb.disabled=true;
+    const d=cardData(); if(state.hideThorn) d.thorn="";
+    d.sharedAt=Date.now();
+    try{await DB.doc("cards/"+UID).set(d)}
+    catch(e){sb.disabled=false;drawShare(e&&e.code==="permission-denied"?"The group wall isn’t accepting cards right now. Let your mentor know.":"That didn’t save. Try again in a moment.")}
+  };
+  const un=document.getElementById("unshare");
+  if(un) un.onclick=async()=>{un.disabled=true;try{await DB.doc("cards/"+UID).delete()}catch(e){un.disabled=false;drawShare("That didn’t go through. Try again in a moment.")}};
+}
+
+/* 9 — group wall */
+function wall(){
+  stage.innerHTML=`
+  <h2>Group wall</h2>
+  <p class="lead">Everyone’s shared cards in one place, for discussing together.</p>
+  <div id="wall" aria-live="polite"></div>
+  <div class="actions"><button class="btn ghost" id="wallBack">${state.stage>0&&Object.keys(state.picks).length===TOT.length?"Back to my card":"Back to start"}</button></div>`;
+  document.getElementById("wallBack").onclick=()=>go(Object.keys(state.picks).length===TOT.length?8:0);
+  drawWall();
+}
+function drawWall(){
+  const el=document.getElementById("wall"); if(!el) return;
+  if(dbState==="off"){el.innerHTML=`<div class="empty">The group wall isn’t set up on this page yet.</div>`;return}
+  if(dbState==="error"){el.innerHTML=`<div class="empty">The group wall couldn’t load. Reload the page to try again.</div>`;return}
+  if(groupCards===null){el.innerHTML=`<div class="empty">${dbState==="slow"?"Still loading. Reload the page to try again.":"Loading cards…"}</div>`;return}
+  const cards=groupCards.map(c=>({id:c.id,sharedAt:Number(c.sharedAt)||0,d:clean(c)})).sort((a,b)=>b.sharedAt-a.sharedAt);
+  if(!cards.length){el.innerHTML=`<div class="empty">No cards yet. Finish the game and share yours to be first.</div>`;return}
+
+  const avg=k=>(cards.reduce((a,c)=>a+c.d.meters[k],0)/cards.length);
+  const tally={};cards.forEach(c=>{if(c.d.wxStart!=null&&c.d.wxNow!=null){const k=c.d.wxStart+">"+c.d.wxNow;tally[k]=(tally[k]||0)+1}});
+  const journeys=Object.entries(tally).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const advice=cards.filter(c=>c.d.advice);
+  const words=cards.map(c=>c.d.word).filter(Boolean);
+
+  el.innerHTML=`
+  <p class="round-meta">${cards.length} ${cards.length===1?"card":"cards"} shared</p>
+  <div class="wall-summary">
+    <div class="panel"><h3>Group growth</h3>
+      ${METERS.map(m=>{const v=avg(m[0]);return `<div class="stat"><span>${m[1]}</span><span class="bar"><span style="width:${v*10}%"></span></span><b>${v.toFixed(1)}</b></div>`}).join("")}
+    </div>
+    <div class="panel"><h3>Forecast journeys</h3>
+      ${journeys.length?`<div class="wx-tally">${journeys.map(([k,n])=>{const [a,b]=k.split(">").map(Number);return `<span>${WEATHER[a][0]} to ${WEATHER[b][0]} ×${n}</span>`}).join("")}</div>`:"<p class='hint'>No forecasts yet.</p>"}
+      ${words.length?`<h3 style="margin-top:1.1rem">Years in a word</h3><div class="wx-tally">${words.map(w=>`<span>${esc(w)}</span>`).join("")}</div>`:""}
+    </div>
+    ${advice.length?`<div class="panel wide"><h3>Advice for next year’s first-years</h3><ul class="advice-list">${advice.map(c=>`<li>${esc(c.d.advice)}<small>${esc(c.d.name)||"Anonymous"}</small></li>`).join("")}</ul></div>`:""}
+    <div class="panel wide"><h3>Discussion starters</h3><ul style="margin:0;padding-left:1.2rem">
+      <li>Which area did the group grow in most? Least? Why might that be?</li>
+      <li>Find someone whose forecast journey matches yours. What changed for you both?</li>
+      <li>Which piece of advice would have helped you most on day one?</li>
+      <li>What’s one bud you heard today that you want to cheer someone on for?</li>
+    </ul></div>
+  </div>
+  <div class="wall-grid">${cards.map(c=>`<div>${cardHTML(c.d,true,true)}${IS_OWNER||c.id===UID?`<button class="remove" data-id="${esc(c.id)}">${c.id===UID?"Remove my card":"Remove this card"}</button>`:""}</div>`).join("")}</div>`;
+  el.querySelectorAll(".remove").forEach(b=>b.onclick=async()=>{
+    const id=b.dataset.id;
+    if(id!==UID&&!confirm("Remove this card from the group wall?"))return;
+    b.disabled=true;try{await DB.doc("cards/"+id).delete()}catch(e){b.disabled=false;b.textContent="Couldn’t remove. Try again."}
+  });
+}
+
+function refreshShared(){ if(state.stage===8) drawShare(); else if(state.stage===9) drawWall(); }
+
+render();
+})();
+</script>
+</body>
+</html>
